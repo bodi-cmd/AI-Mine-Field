@@ -1,11 +1,12 @@
 module.exports = (content) => {
   const fs = require("fs");
   const { exec } = require("child_process");
-
+  const date = new Date();
+  const fileName = `./out_${date.getTime()}.txt`
   try {
-    fs.writeFileSync("./out.txt", content);
+    fs.writeFileSync(fileName, content);
 
-    exec("prover9 -f out.txt", (error, stdout, stderr) => {
+    exec("prover9 -f "+fileName, (error, stdout, stderr) => {
       if (stderr && stderr.includes("THEOREM PROVED")) {
         console.log("THEOREM PROVED");
         return true;
