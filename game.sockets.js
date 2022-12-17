@@ -17,7 +17,7 @@ module.exports = (io) => {
 
     const checkIfSafe = (coordinatesToCheck) => {
       const inputTextForProver9 = buildText(
-        gameState.discovered.filter((cell) => cell.type === "HINT").map((cell) => cell.hint),
+        gameState.discovered.filter((cell) => cell.type === "HINT").map((cell) => cell.value),
         coordinatesToCheck
       );
       return prover9(inputTextForProver9);

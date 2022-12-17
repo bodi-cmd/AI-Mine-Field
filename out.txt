@@ -1,15 +1,14 @@
 formulas(assumptions).
 
-nu exista bombe pe linia 1.
-,bomba la (6,4).
-,oricare X, mine(x,1) <=> mine(1,x).
-,mine(x,3) => mine(x,8).
+all y -mine(1,y).
+,asd.
+,asd.
 
 
 end_of_list.
 
 formulas(goals).
 
--mine(2,6).
+-mine(1,6).
 
 end_of_list.

@@ -5,7 +5,7 @@ module.exports = Object.freeze([
       y: 1,
     },
     type: "HINT",
-    value: "asd",
+    value: "all y -mine(1,y)",
     hint: "nu exista bombe pe linia 1",
   },
   {

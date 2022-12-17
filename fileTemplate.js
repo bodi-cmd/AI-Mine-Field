@@ -13,5 +13,5 @@ end_of_list.
 `;
 };
 
-//all x -mine(x,x).
+//
 //-mine(1,1).

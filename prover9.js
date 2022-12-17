@@ -4,21 +4,20 @@ module.exports = (content) => {
 
   try {
     fs.writeFileSync("./out.txt", content);
-    return Math.random() > 0.5;
+
+    exec("prover9 -f out.txt", (error, stdout, stderr) => {
+      if (stderr && stderr.includes("THEOREM PROVED")) {
+        console.log("THEOREM PROVED");
+        return true;
+      }
+  
+      if (error) {
+        console.error(`error: ${error.message}`);
+        return false;
+      }
+    });
+    return false
   } catch (error) {
     return true;
   }
-  //   exec("prover9 -f out.txt", (error, stdout, stderr) => {
-  //     if (stderr) {
-  //       console.error(`stderr: ${stderr}`);
-  //       return;
-  //     }
-
-  //     if (error) {
-  //       console.error(`error: ${error.message}`);
-  //       return;
-  //     }
-
-  //     console.log(`stdout:\n${stdout}`);
-  //   });
 };
