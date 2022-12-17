@@ -24,8 +24,9 @@ module.exports = (io) => {
     };
 
     const updateGameState = () => {
-      const currentItem = findItemByCoordinates(gameState.currentPosition);
+      if (gameState.lost) return;
 
+      const currentItem = findItemByCoordinates(gameState.currentPosition);
       if (
         currentItem &&
         !gameState.discovered.find((item) => JSON.stringify(item) === JSON.stringify(currentItem))
@@ -49,6 +50,11 @@ module.exports = (io) => {
     };
 
     updateGameState();
+
+    socket.on("RESTART", () => {
+        gameState = JSON.parse(JSON.stringify(initialGameState));
+        updateGameState();
+    });
 
     socket.on("KEY_EVENT", (key) => {
       switch (key) {

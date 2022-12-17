@@ -8,7 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"
+        integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/style.css">
     <script src="./js/client.js"></script>
     <title>Mine Field</title>
@@ -23,16 +25,21 @@
 
     <div class="container">
         <div class="grid-container">
-        
+
         </div>
         <div class="messages-list">
+            <button id="reset" class="hidden">Play Again</button>
             <div class="message">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo, voluptatum!  
+               
             </div>
             <div class="separator"></div>
-            <h1>Hints:</h1>
+            <h3>Lives:</h3>
+
+            <div class="lives-container"></div>
+            <div class="separator"></div>
+            <h3>Hints:</h3>
             <div class="hints">
-            
+
             </div>
         </div>
     </div>

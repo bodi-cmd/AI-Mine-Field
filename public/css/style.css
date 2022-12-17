@@ -16,7 +16,10 @@ body{
 }
 
 .message{
-    flex: 0 1 auto;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .messages-list{
@@ -52,8 +55,34 @@ body{
     margin:15px;
 }
 
+#reset{
+    width: 200px;
+    height: 50px;
+    color:white;
+    font-weight: 700;
+    font-size: 24px;
+    background-color: red;
+    border: none;
+}
+
 h1{
     color:white;
+}
+
+h3{
+    margin:0;
+}
+
+.lives-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 24px;
+}
+
+.heart-icon{
+    height: 24px;
+    width: 24px;
 }
 
 .grid-container {

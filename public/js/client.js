@@ -1,9 +1,14 @@
 window.addEventListener("load", (event) => {
-  const MATRIX_SIZE = 8;
+  const resetBtn = document.querySelector("#reset");
   const socket = io();
+  var lost = false;
   socket.on("connect", function () {
     console.log("socket connected");
   });
+
+  resetBtn.onclick = () => {
+    socket.emit("RESTART");
+  };
 
   onkeydown = (event) => {
     socket.emit("KEY_EVENT", event.key);
@@ -31,6 +36,8 @@ const update = (gameState) => {
 
   const gridContainer = document.querySelector(".grid-container");
   const hintContainer = document.querySelector(".hints");
+  const livesContainer = document.querySelector(".lives-container");
+  const message = document.querySelector(".message");
 
   let matrixHTMl = "";
 
@@ -38,8 +45,14 @@ const update = (gameState) => {
     for (let y = 1; y <= gameState.size; y++) {
       const selected = checkIfSelected(x, y) ? " selected" : "";
       const discovered = checkTypeOfCell(x, y) ? " discovered" : "";
-      const hint = checkTypeOfCell(x, y) === "HINT" ? `<img class="icon" src="./img/hint.svg" alt="hint"/>` : "";
-      const mine = checkTypeOfCell(x, y) === "MINE" ? `<img class="icon" src="./img/bomb.svg" alt="mine"/>` : "";
+      const hint =
+        checkTypeOfCell(x, y) === "HINT"
+          ? `<img class="icon" src="./img/hint.svg" alt="hint"/>`
+          : "";
+      const mine =
+        checkTypeOfCell(x, y) === "MINE"
+          ? `<img class="icon" src="./img/bomb.svg" alt="mine"/>`
+          : "";
 
       matrixHTMl =
         matrixHTMl +
@@ -50,15 +63,25 @@ const update = (gameState) => {
 
   let hintsHTML = "";
 
-  gameState.discovered.forEach(cell=>{
-    if(cell.type === "HINT"){
-        hintsHTML += `<div class="hint">${cell.hint}</div>`;
+  gameState.discovered.forEach((cell) => {
+    if (cell.type === "HINT") {
+      hintsHTML += `<div class="hint">${cell.hint}</div>`;
     }
-  })
+  });
 
   hintContainer.innerHTML = hintsHTML;
 
+  let livesHTML = "";
 
+  for (let i = 0; i < gameState.lives; i++) {
+    livesHTML += `<img class="heart-icon" src="./img/heart.svg"/>`;
+  }
+
+  livesContainer.innerHTML = livesHTML;
+
+  if (gameState.lost) {
+    message.innerHTML = "You lost!";
+  }
 
   console.log(gameState);
 };
