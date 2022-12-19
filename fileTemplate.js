@@ -1,7 +1,15 @@
 module.exports = (assumptions, positionToCheck) => {
+  const assumptionsArr = assumptions.map((assumption) => assumption + ".\n");
+
+  let assumptionString = "";
+
+  assumptionsArr.forEach((assumption) => {
+    assumptionString += assumption;
+  });
+
   return `formulas(assumptions).
 
-${assumptions.map((assumption) => assumption + ".\n")}
+${assumptionString}
 
 end_of_list.
 
