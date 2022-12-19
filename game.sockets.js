@@ -15,45 +15,49 @@ module.exports = (io) => {
 
     let gameState = JSON.parse(JSON.stringify(initialGameState));
 
-    const checkIfSafe = (coordinatesToCheck) => {
+    const checkIfSafe = (coordinatesToCheck, callback) => {
       const inputTextForProver9 = buildText(
         gameState.discovered.filter((cell) => cell.type === "HINT").map((cell) => cell.value),
         coordinatesToCheck
       );
-      return prover9(inputTextForProver9);
+      prover9(inputTextForProver9, callback);
     };
 
     const updateGameState = () => {
       if (gameState.lost) return;
 
       const currentItem = findItemByCoordinates(gameState.currentPosition);
+
+      if (currentItem?.type === "MINE") {
+        gameState.lost = true;
+        socket.emit("UPDATE", gameState);
+        return;
+      }
+
       if (
         currentItem &&
         !gameState.discovered.find((item) => JSON.stringify(item) === JSON.stringify(currentItem))
       ) {
         gameState.discovered.push(currentItem);
 
-        if (!checkIfSafe(gameState.currentPosition)) {
-          if (gameState.lives > 0) {
-            gameState.lives -= 1;
-          } else {
-            gameState.lost = true;
+        checkIfSafe(gameState.currentPosition, (safe, error) => {
+          if (safe) {
+            if (gameState.lives > 0) {
+              gameState.lives -= 1;
+            } else {
+              gameState.lost = true;
+            }
           }
-        }
+          socket.emit("UPDATE", gameState);
+        });
       }
-
-      if (currentItem.type === "MINE") {
-        gameState.lost = true;
-      }
-
-      socket.emit("UPDATE", gameState);
     };
 
     updateGameState();
 
     socket.on("RESTART", () => {
-        gameState = JSON.parse(JSON.stringify(initialGameState));
-        updateGameState();
+      gameState = JSON.parse(JSON.stringify(initialGameState));
+      updateGameState();
     });
 
     socket.on("KEY_EVENT", (key) => {

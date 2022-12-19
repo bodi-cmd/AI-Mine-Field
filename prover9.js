@@ -1,4 +1,4 @@
-module.exports = (content) => {
+module.exports = (content, callback) => {
   const fs = require("fs");
   const { exec } = require("child_process");
   const date = new Date();
@@ -6,7 +6,7 @@ module.exports = (content) => {
   try {
     fs.writeFileSync(fileName, content);
 
-    return Math.random() > 0.5;
+    callback(Math.random() > 0.5, null);
 
 //     exec("prover9 -f "+fileName, (error, stdout, stderr) => {
 //       if (stderr && stderr.includes("THEOREM PROVED")) {
@@ -21,6 +21,6 @@ module.exports = (content) => {
 //     });
 //     return false
   } catch (error) {
-    return true;
+    callback(true, null);
   }
 };
