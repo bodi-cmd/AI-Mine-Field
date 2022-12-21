@@ -68,8 +68,8 @@ module.exports = Object.freeze([
       y: 1,
     },
     type: "HINT",
-    value: "all x ( mine(9,x) -> mine(1,x) )",
-    hint: "all x ( mine(9,x) -> mine(1,x) )",
+    value: "all x ( mine(8,x) -> mine(1,x) )",
+    hint: "all x ( mine(8,x) -> mine(1,x) )",
   },
   {
     coordinates: {
@@ -92,7 +92,7 @@ module.exports = Object.freeze([
   {
     coordinates: {
       x: 8,
-      y: 3,
+      y: 8,
     },
     type: "HINT",
     value: "all x all y all z ( mine(x,y) & !(y = z) -> -mine(x,z))",

@@ -6,21 +6,27 @@ module.exports = (content, callback) => {
   try {
     fs.writeFileSync(fileName, content);
 
-    callback(Math.random() > 0.5, null);
+    exec("prover9 -f "+fileName, (error, stdout, stderr) => {
+      if (stderr && stderr.includes("THEOREM PROVED")) {
+        console.log("THEOREM PROVED");
+        callback(true, null);
+        return;
+      }
 
-//     exec("prover9 -f "+fileName, (error, stdout, stderr) => {
-//       if (stderr && stderr.includes("THEOREM PROVED")) {
-//         console.log("THEOREM PROVED");
-//         return true;
-//       }
   
-//       if (error) {
-//         console.error(`error: ${error.message}`);
-//         return false;
-//       }
-//     });
-//     return false
+      if (error) {
+        console.log("SEARCH_FAILED");
+        callback(false, error);
+        return;
+      }
+
+      console.log("NOTHING");
+      callback(false, null);
+      return;
+    });
+    
   } catch (error) {
+    console.log("CAUGHT_ERROR");
     callback(true, null);
   }
 };

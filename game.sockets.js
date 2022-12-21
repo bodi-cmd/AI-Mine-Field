@@ -28,20 +28,21 @@ module.exports = (io) => {
 
       const currentItem = findItemByCoordinates(gameState.currentPosition);
 
-      if (currentItem?.type === "MINE") {
-        gameState.lost = true;
-        socket.emit("UPDATE", gameState);
-        return;
-      }
-
       if (
         currentItem &&
         !gameState.discovered.find((item) => JSON.stringify(item) === JSON.stringify(currentItem))
       ) {
         gameState.discovered.push(currentItem);
 
+        if (currentItem && currentItem.type === "MINE") {
+          gameState.lost = true;
+          socket.emit("UPDATE", gameState);
+          console.log(gameState)
+          return;
+        }
+
         checkIfSafe(gameState.currentPosition, (safe, error) => {
-          if (safe) {
+          if (!safe) {
             if (gameState.lives > 0) {
               gameState.lives -= 1;
             } else {
@@ -49,7 +50,11 @@ module.exports = (io) => {
             }
           }
           socket.emit("UPDATE", gameState);
+          console.log(gameState)
         });
+      }
+      else{
+        socket.emit("UPDATE", gameState);
       }
     };
 
@@ -76,6 +81,7 @@ module.exports = (io) => {
           break;
         case "ArrowLeft":
           if (gameState.currentPosition.y > 1) {
+            console.log("clicked")
             gameState.currentPosition.y--;
             updateGameState();
           }
