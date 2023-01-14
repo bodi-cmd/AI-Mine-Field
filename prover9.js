@@ -7,8 +7,8 @@ module.exports = (content, callback) => {
     fs.writeFileSync(fileName, content);
 
     exec("prover9 -f "+fileName, (error, stdout, stderr) => {
-      if (stderr && stderr.includes("THEOREM PROVED")) {
-        console.log("THEOREM PROVED");
+      if (stderr && !(stdout.includes("Exiting with failure."))) {
+        console.log("stdout",stdout);
         callback(true, null);
         return;
       }
