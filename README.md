@@ -2,17 +2,17 @@
 
 #### If you don't have node installed follow these steps:
 Update your system:
-*`sudo apt update`
+\`sudo apt update`
 
 Install NodeJs:
-*`sudo apt install nodejs`
+\`sudo apt install nodejs`
 Check if it was installed successfully:
-*`node -v`
+\`node -v`
 
 #### Initialize the application:
 After you cloned it, run:
-*`npm i`
+\`npm i`
 
 #### Start the application:
 To start it, run:
-*`node index.js`
+\`node index.js`
